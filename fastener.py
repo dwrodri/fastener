@@ -78,7 +78,7 @@ def extract_audio_to_ndarray(
     """
     Extract audio from media file to 16KHz pulsecodes and return as flattened ndarray
     """
-    ffmpeg_extract_command = f"ffmpeg -nostdin -i {media_file} -map 0:{stream_index} -c:a pcm_16le -ar 160000 -ac 1 -f s16le -"
+    ffmpeg_extract_command = f"ffmpeg -nostdin -i {media_file} -map 0:{stream_index} -c:a pcm_s16le -ar 160000 -ac 1 -f s16le -"
     cmd_result = subprocess.run(
         ffmpeg_extract_command.split(), check=True, capture_output=True
     )
@@ -105,7 +105,7 @@ def main(media_file: pathlib.Path):
         # load audio and pad/trim it to fit 30 seconds
         audio = whisper.pad_or_trim(audio)
         # make log-Mel spectrogram and move to the same device as the model
-        mel = whisper.log_mel_spectrogram(audio).to(model.device)
+        mel = whisper.log_mel_spectrogram(audio, n_mels=128).to(model.device)
         # detect the spoken language
         _, probs = model.detect_language(mel)
         print(f"Detected language: {max(probs, key=probs.get)}")  # type: ignore
