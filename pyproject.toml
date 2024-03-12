@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "fastener"
+version = "0.1.0"
+description = "\"Create English Subtitles for anime episodes before the translation drops.\""
+authors = ["Derek Rodriguez <derek.rodriguez@pm.me>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+huggingface = "^0.0.1"
+openai = "^1.13.3"
+openai-whisper = "^20231117"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
